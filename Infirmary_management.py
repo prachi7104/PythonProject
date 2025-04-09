@@ -5,9 +5,6 @@ import os
 from admin import admin_mode
 from user import user_mode
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
 def display_welcome():
     print("*" * 55)
     print("" + " " * 15 + "WELCOME TO OUR INFIRMARY" + " " * 15 + "")
@@ -15,7 +12,6 @@ def display_welcome():
 
 def main_menu():
     while True:
-        clear_screen()
         display_welcome()
         print("\n1. Admin Mode")
         print("2. User Mode")
@@ -28,10 +24,10 @@ def main_menu():
         elif choice == "2":
             user_mode()
         elif choice == "3":
-            print("\n👋 Exiting the system. Goodbye!")
+            print("\n Exiting the system. Goodbye!")
             break
         else:
-            print("❌ Invalid input. Please enter 1, 2, or 3.")
+            print(" Invalid input. Please enter 1, 2, or 3.")
             input("Press Enter to try again...")
 
 if _name_ == "_main_":
@@ -73,7 +69,7 @@ def admin_mode():
             patients[i] = ",".join(new) + "\n"
             with open("patients.txt", "w") as file:
                 file.writelines(patients)
-            print("✅ Patient updated.")
+            print(" Patient updated.")
 
         def display_patients():
             print("Patient Information:")
@@ -103,7 +99,7 @@ def admin_mode():
             elif ch == "3": display_patients()
             elif ch == "4": delete_patient()
             elif ch == "5": break
-            else: print("❌ Invalid choice.")
+            else: print(" Invalid choice.")
             print("*" * 40)
 
     def doctor_management():
@@ -118,7 +114,7 @@ def admin_mode():
                 age = input("Age: ")
                 spl = input("Specialization: ")
                 file.write(f"{name},{age},{spl}\n")
-                print("✅ Doctor added.")
+                print(" Doctor added.")
 
         def display_doctors():
             print("Doctor Information:")
@@ -135,7 +131,7 @@ def admin_mode():
             if ch == "1": add_doctor()
             elif ch == "2": display_doctors()
             elif ch == "3": break
-            else: print("❌ Invalid choice.")
+            else: print(" Invalid choice.")
 
     def medicines_records():
         def display_menu():
@@ -152,7 +148,7 @@ def admin_mode():
                 price = input("Price: ")
                 stocks = input("Stocks: ")
                 file.write(f"{name},{price},{stocks}\n")
-                print("✅ Medicine added.")
+                print(" Medicine added.")
 
         def edit_medicine():
             with open("medicines.txt", "r") as file:
@@ -166,7 +162,7 @@ def admin_mode():
             meds[i] = f"{name},{price},{stock}\n"
             with open("medicines.txt", "w") as file:
                 file.writelines(meds)
-            print("✅ Updated.")
+            print(" Updated.")
 
         def display_all():
             print("Medicine Information:")
@@ -191,7 +187,7 @@ def admin_mode():
                         updated = True
                     else:
                         file.write(line)
-            print("✅ Price updated." if updated else "❌ Not found.")
+            print(" Price updated." if updated else " Not found.")
 
         def update_stocks():
             name = input("Medicine name: ")
@@ -207,7 +203,7 @@ def admin_mode():
                         updated = True
                     else:
                         file.write(line)
-            print("✅ Stocks updated." if updated else "❌ Not found.")
+            print(" Stocks updated." if updated else " Not found.")
 
         while True:
             display_menu()
@@ -218,7 +214,7 @@ def admin_mode():
             elif ch == "4": update_price()
             elif ch == "5": update_stocks()
             elif ch == "6": break
-            else: print("❌ Invalid choice.")
+            else: print(" Invalid choice.")
 
     while True:
         print("*" * 40)
@@ -231,10 +227,10 @@ def admin_mode():
         elif ch == "2": doctor_management()
         elif ch == "3": medicines_records()
         elif ch == "4": break
-        else: print("❌ Invalid input.")
+        else: print(" Invalid input.")
 
 def admin_mode():
-    print("✅ Admin mode is now active.")
+    print(" Admin mode is now active.")
     input("Press Enter to exit admin mode...")
 
 user.py
@@ -247,11 +243,11 @@ def user_mode():
             for line in file:
                 details = line.strip().split(",")
                 if details[0] == name and details[1] == dob:
-                    print("✅ Login successful!")
+                    print(" Login successful!")
                     login_successful = True
                     break
         if not login_successful:
-            print("❌ Invalid credentials.")
+            print(" Invalid credentials.")
         return name, dob, login_successful
 
     def signup():
@@ -262,25 +258,25 @@ def user_mode():
             gender = input("Enter gender (M/F/O): ")
             condition = input("Enter condition: ")
             file.write(f"{name},{dob},{age},{gender},{condition}\n")
-            print("✅ Account created successfully.")
+            print(" Account created successfully.")
 
     def show_user_profile(name, dob):
         with open("patients.txt", "r") as file:
             for line in file:
                 details = line.strip().split(",")
                 if details[0] == name and details[1] == dob:
-                    print("\n👤 User Profile:")
+                    print("\n User Profile:")
                     print("Name:", details[0])
                     print("Date of Birth:", details[1])
                     print("Age:", details[2])
                     print("Gender:", details[3])
                     print("Condition:", details[4])
                     return
-        print("❌ Profile not found.")
+        print(" Profile not found.")
 
     def bill():
         def display_medicines():
-            print("\n📦 Available Medicines:")
+            print("\n Available Medicines:")
             with open("medicines.txt", "r") as file:
                 print("-" * 40)
                 for line in file:
@@ -290,7 +286,7 @@ def user_mode():
 
         def generate_bill(items):
             total = sum(item[2] for item in items)
-            print("\n🧾 Bill Summary:")
+            print("\n Bill Summary:")
             print("-" * 40)
             print("Name\tQty\tPrice")
             for item in items:
@@ -307,7 +303,7 @@ def user_mode():
             try:
                 qty = int(input("Enter quantity: "))
             except ValueError:
-                print("❌ Invalid quantity.")
+                print("Invalid quantity.")
                 continue
 
             found = False
@@ -317,13 +313,13 @@ def user_mode():
                     if med_name == name:
                         if qty <= int(stocks):
                             items.append((med_name, qty, float(price) * qty))
-                            print(f"✅ {med_name} added to bill.")
+                            print(f"{med_name} added to bill.")
                             found = True
                         else:
                             print("⚠ Insufficient stock.")
                         break
             if not found:
-                print("❌ Medicine not found.")
+                print("Medicine not found.")
             cont = input("Add more? (yes/no): ")
             if cont.lower() != "yes":
                 break
@@ -331,7 +327,7 @@ def user_mode():
         if items:
             generate_bill(items)
         else:
-            print("🛒 No items in the bill.")
+            print("No items in the bill.")
 
     # Start user mode interaction
     while True:
@@ -354,18 +350,18 @@ def user_mode():
                     elif ch2 == "2":
                         bill()
                     elif ch2 == "3":
-                        print("🚪 Logging out...")
+                        print("Logging out...")
                         break
                     else:
-                        print("❌ Invalid option.")
+                        print("Invalid option.")
         elif ch == "2":
             signup()
         elif ch == "3":
-            print("👋 Exiting user mode.")
+            print("Exiting user mode.")
             break
         else:
-            print("❌ Invalid input.")
+            print("Invalid input.")
 
 def user_mode():
-    print("✅ User mode is now active.")
+    print("User mode is now active.")
     input("Press Enter to exit user mode...")
